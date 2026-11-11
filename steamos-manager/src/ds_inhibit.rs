@@ -291,7 +291,9 @@ impl Service for Inhibitor {
             if let Err(e) = self.inotify.watches().remove(wd) {
                 warn!("Error removing watch while shutting down: {e}");
             }
-            if let Err(e) = node.uninhibit().await && e.kind() != ErrorKind::NotFound {
+            if let Err(e) = node.uninhibit().await
+                && e.kind() != ErrorKind::NotFound
+            {
                 warn!("Error uninhibiting {} while shutting down: {e}", node.id);
                 res = Err(e);
             }
